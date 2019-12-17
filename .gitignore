@@ -5,3 +5,7 @@ pilotapp.api.sln
 .vs/pilotapp.api/v15/Server/sqlite3/storage.ide
 .vs/pilotapp.api/v15/Server/sqlite3/storage.ide-shm
 .vs/pilotapp.api/v15/Server/sqlite3/storage.ide-wal
+.vs
+.vscode
+bin
+obj

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using pilotapp.api.Data;
+using Pilotapp.API.Data;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace pilotapp.api.Controllers
+namespace Pilotapp.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

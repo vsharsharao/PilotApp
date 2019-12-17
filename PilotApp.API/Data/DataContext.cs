@@ -1,12 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using pilotapp.api.Models;
+using Pilotapp.API.Models;
 
-namespace pilotapp.api.Data
+namespace Pilotapp.API.Data
 {
     public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options){}
 
         public DbSet<Value> Values { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-namespace pilotapp.api.Models
+namespace Pilotapp.API.Models
 {
     public class Value
     {

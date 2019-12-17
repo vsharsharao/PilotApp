@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using pilotapp.api.Data;
+using Pilotapp.API.Data;
 using Microsoft.AspNetCore.Mvc;
+using PilotApp.API.Interfaces;
+using PilotApp.API.Data;
 
 namespace PilotApp.API
 {
@@ -25,6 +27,8 @@ namespace PilotApp.API
             (Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddCors();
+
+            services.AddScoped<IAuthRepository, AuthRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
