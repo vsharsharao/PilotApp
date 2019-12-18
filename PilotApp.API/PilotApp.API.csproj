@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <DebugType>portable</DebugType>
   </PropertyGroup>
   <ItemGroup>&#xD;
   </ItemGroup>
