@@ -8,6 +8,13 @@ using Pilotapp.API.Data;
 using Microsoft.AspNetCore.Mvc;
 using PilotApp.API.Interfaces;
 using PilotApp.API.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using PilotApp.API.Helpers;
 
 namespace PilotApp.API
 {
@@ -29,6 +36,17 @@ namespace PilotApp.API
             services.AddCors();
 
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                        ValidateIssuerSigningKey = true,
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,9 +57,24 @@ namespace PilotApp.API
                 app.UseDeveloperExceptionPage();
             }
 
+            else
+            {
+                app.UseExceptionHandler(builder => builder.Run(async context =>
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    var error = context.Features.Get<IExceptionHandlerFeature>();
+
+                    if (error != null)
+                    {
+                        context.Response.AddApplicationError(error.Error.Message);
+                        await context.Response.WriteAsync(error.Error.Message);
+                    }
+                }));
+            }
             // app.UseHttpsRedirection();
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

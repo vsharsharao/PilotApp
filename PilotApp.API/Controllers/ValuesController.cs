@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Pilotapp.API.Data;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Pilotapp.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ValuesController : ControllerBase
@@ -27,7 +29,7 @@ namespace Pilotapp.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetValue(int id)
         {
-            var value = await _context.Values.FirstOrDefaultAsync(i =>  i.Id == id);
+            var value = await _context.Values.FirstOrDefaultAsync(i => i.Id == id);
             return Ok(value);
         }
     }
